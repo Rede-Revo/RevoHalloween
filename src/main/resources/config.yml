@@ -1,0 +1,7 @@
+TopDamage:
+  1:
+    - "broadcast {player} foi o que mais causou dano ao Ravager! Dano: {damage}"
+  2:
+    - "broadcast {player} ficou em segundo lugar causando dano ao Ravager! Dano: {damage}"
+  3:
+    - "broadcast {player} ficou em terceiro lugar causando dano ao Ravager! Dano: {damage}"

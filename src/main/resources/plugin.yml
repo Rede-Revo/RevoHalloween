@@ -1,0 +1,4 @@
+name: RevoHalloween
+version: '${version}'
+main: org.thiagogebrim.revohalloween.RevoHalloween
+api-version: '1.20'
