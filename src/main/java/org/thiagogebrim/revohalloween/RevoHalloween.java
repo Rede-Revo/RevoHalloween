@@ -9,6 +9,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,9 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
+        setupConfig();
         getServer().getPluginManager().registerEvents(this, this);
     }
-
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Ravager && event.getDamager() instanceof Player player) {
@@ -32,6 +33,16 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
             } else {
                 damageInfo.addDamage(damage);
             }
+        }
+    }
+
+    private void setupConfig() {
+
+        if (!new File(getDataFolder(), "config.yml").exists()) {
+            getLogger().info("Config.yml not found, creating!");
+            saveDefaultConfig();
+        } else {
+            getLogger().info("Config.yml found, loading!");
         }
     }
 
