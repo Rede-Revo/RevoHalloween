@@ -1,11 +1,11 @@
 package org.thiagogebrim.revohalloween;
 
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.CaveSpider;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Spider;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,7 +26,7 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Spider && event.getDamager() instanceof Player player) {
+        if (event.getEntity() instanceof Spider spider && !(spider instanceof CaveSpider) && event.getDamager() instanceof Player player) {
             int damage = (int) Math.round(event.getDamage());
 
             DamageInfo damageInfo = findDamageInfo(player);
@@ -49,7 +49,7 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Spider) {
+        if (event.getEntity() instanceof Spider spider && !(spider instanceof CaveSpider)) {
             executeTopDamageCommands();
             damageInfos.clear();
         }
