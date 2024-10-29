@@ -2,9 +2,10 @@ package org.thiagogebrim.revohalloween;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Ravager;
+import org.bukkit.entity.Spider;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,9 +23,10 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
         setupConfig();
         getServer().getPluginManager().registerEvents(this, this);
     }
+
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Ravager && event.getDamager() instanceof Player player) {
+        if (event.getEntity() instanceof Spider && event.getDamager() instanceof Player player) {
             int damage = (int) Math.round(event.getDamage());
 
             DamageInfo damageInfo = findDamageInfo(player);
@@ -37,7 +39,6 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
     }
 
     private void setupConfig() {
-
         if (!new File(getDataFolder(), "config.yml").exists()) {
             getLogger().info("Config.yml not found, creating!");
             saveDefaultConfig();
@@ -48,7 +49,7 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onEntityDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Ravager) {
+        if (event.getEntity() instanceof Spider) {
             executeTopDamageCommands();
             damageInfos.clear();
         }
@@ -69,7 +70,7 @@ public final class RevoHalloween extends JavaPlugin implements Listener {
 
         for (int i = 0; i < 3 && i < damageInfos.size(); i++) {
             DamageInfo info = damageInfos.get(i);
-            List<String> commands = config.getStringList("TopDamage." + (i+1));
+            List<String> commands = config.getStringList("TopDamage." + (i + 1));
             for (String command : commands) {
                 command = command.replace("{player}", info.getPlayer().getName());
                 command = command.replace("{damage}", String.valueOf(info.getDamage()));
